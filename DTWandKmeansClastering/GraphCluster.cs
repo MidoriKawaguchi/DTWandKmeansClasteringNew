@@ -87,19 +87,14 @@ namespace DTWandKmeansClastering
             }
         }
 
-        private void udClusterA_ValueChanged(object sender, EventArgs e)
+        private void UdClusterA_ValueChanged(object sender, EventArgs e)
         {
             UpdateCluster(kmeans);
         }
 
-        private void udClusterB_ValueChanged(object sender, EventArgs e)
+        private void UdClusterB_ValueChanged(object sender, EventArgs e)
         {
             UpdateCluster(kmeans);
-        }
-
-        private void GraphCluster_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

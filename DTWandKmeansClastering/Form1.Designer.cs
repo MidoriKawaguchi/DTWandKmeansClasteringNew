@@ -97,7 +97,7 @@
             this.btCentriudDist.TabIndex = 6;
             this.btCentriudDist.Text = "view Distance ";
             this.btCentriudDist.UseVisualStyleBackColor = true;
-            this.btCentriudDist.Click += new System.EventHandler(this.BtCentriudDist_Click);
+
             // 
             // Form1
             // 

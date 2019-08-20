@@ -39,6 +39,10 @@ namespace DTWandKmeansClastering
             Graph2 g2 = new Graph2(kmeans);
             graphs2.Add(g2);
             g2.Show();
+
+            GraphCluster gc = new GraphCluster(kmeans);
+            Cgraphs.Add(gc);
+            gc.Show();
         }
 
         private void DataInput_Click(object sender, EventArgs e)
@@ -77,25 +81,25 @@ namespace DTWandKmeansClastering
             }
         }
 
-        private void BtCentriudDist_Click(object sender, EventArgs e)
-        {
-            //他のクラスタとの距離を求める
-            int k = int.Parse(kNum.Text);
+        //private void BtCentriudDist_Click(object sender, EventArgs e)
+        //{
+        //    他のクラスタとの距離を求める
+        //    int k = int.Parse(kNum.Text);
 
-            for (int i = 0; i < dbashoots.Count(); i++)
-            {
-                //自身のクラスタ以外
-                if (i != k)
-                {
-                    DBA.CostPath clusterDPtable = DBA.DpMatching(dbashoots[k].DBAacc, dbashoots[i].DBAacc);
-                    Console.WriteLine("clusterDPtable : " + i + "    " + clusterDPtable.cost[k][i].ToString());
-                }
-            }
+        //    for (int i = 0; i < dbashoots.Count(); i++)
+        //    {
+        //        自身のクラスタ以外
+        //        if (i != k)
+        //        {
+        //            DBA.CostPath clusterDPtable = DBA.DpMatching(dbashoots[k].DBAacc, dbashoots[i].DBAacc);
+        //            Console.WriteLine("clusterDPtable : " + i + "    " + clusterDPtable.cost[k][i].ToString());
+        //        }
+        //    }
 
-            GraphCluster gc = new GraphCluster(kmeans);
-            Cgraphs.Add(gc);
-            gc.Show();
+        //    GraphCluster gc = new GraphCluster(kmeans);
+        //    Cgraphs.Add(gc);
+        //    gc.Show();
 
-        }
+        //}
     }
 }

@@ -280,7 +280,7 @@ namespace DTWandKmeansClastering
         {
             //該当フェーズ部分をオーバーレイして表示する
 
-            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            //System.Diagnostics.Process p = new System.Diagnostics.Process();
 
             //とりあえずパスを通した
             string directoryName1 = "K:\\CAM\\Aside\\!forC#\\" + laShootNum1.Text + ".MP4";
@@ -301,7 +301,6 @@ namespace DTWandKmeansClastering
                 string line = sr1.ReadLine(); //CSVの1行読み込み
                 string[] values = line.Split(',');//カンマに分け配列に格納
                 //はじめの時刻を取りに行く
-                Console.WriteLine(line.Length);
                 lineACount++;
 
                 if (lineACount == 2)
@@ -343,7 +342,7 @@ namespace DTWandKmeansClastering
                 string video2strattime = (assocTimeBStart * ViewShootingVideo.playtimes).ToString();
                 string video2cutLength = ((assocTimeBEnd - assocTimeBStart) * ViewShootingVideo.playtimes).ToString();
 
-                p.StartInfo.FileName = "ffmpeg";
+                //p.StartInfo.FileName = "ffmpeg";
 
                 //-y :強制上書きオプション
                 // [ " を書く必要があるため　\" で　”　を表しています]
@@ -353,39 +352,150 @@ namespace DTWandKmeansClastering
                 //[0:0]1つ目の動画   [1:0]2つ目の動画
                 //blend=all_mode=difference : 差分を表示　blend=c0_mode=average：普通に重畳
 
-                string[] paras = { "-y -ss", video1starttime, " -t", video1cutLength, " -i" ,directoryName1, " -ss",
-                     video2strattime, " -t", video2cutLength, "-i", directoryName2 ,
-                    "-filter_complex \"[0:0]split[shoot1][shoot2]; [shoot1] [1:0] overlay[overlay]; [overlay] [shoot2] blend=all_mode=difference \" -map 1:1 overlay"+ laShootNum1.Text + "_" + laShootNum2.Text  +".MP4"
-                    };
+                string[] paras0 =
+                {
+                    //ffmpeg.exeのある場所
+                    //出力ファイルもこちらにされる
+                    " cd C:\\Users\\MIDORI\\Source\\Repos\\DTWandKmeansClastering\\DTWandKmeansClastering\\bin\\Debug"
+                };
 
-                //string[] paras = {ffmpeg -i directoryName1 - filter_complex "[0:v]colorchannelmixer=0:0:0:0.9:1:0:0:0.9:1:0:0:0.9[colorchannelmixed];[colorchannelmixed]eq=1:0.3:1:1:1:1:1:1[color_effect]" -map [color_effect] -c:v libx264 -c:a copy output_video1.MP4 
-                //    && ffmpeg -i directoryName2 - filter_complex "[0:v]colorchannelmixer=1:0:0:0:0:0:0:0:0:0:0:0[colorchannelmixed];[colorchannelmixed]eq=1:1:1:1:1:1:1:1[color_effect]" -map [color_effect] -c:v libx264 -c:a copy output_video2.MP4 
-                //    && ffmpeg -y -i C:\Users\MIDORI\Downloads\ffmpeg-4.1.4-win64-static\bin\output_video1.MP4 -i C:\Users\MIDORI\Downloads\ffmpeg-4.1.4-win64-static\bin\output_video2.MP4  -filter_complex "blend=all_opacity=0.7" + laShootNum1.Text + "_" + laShootNum2.Text + ".MP4"
+                //string[] paras = { "-y -ss", video1starttime, " -t", video1cutLength, " -i" ,directoryName1, " -ss",
+                //     video2strattime, " -t", video2cutLength, "-i", directoryName2 ,
+                //    "-filter_complex \"[0:0]split[shoot1][shoot2]; [shoot1] [1:0] overlay[overlay]; [overlay] [shoot2] blend=all_mode=difference \" -map 1:1 overlay"+ laShootNum1.Text + "_" + laShootNum2.Text  +".MP4"
+                //    };
+
+                //string[] paras = { "ffmpeg -y -i " + directoryName1 +  " -filter_complex  \"[0:v]colorchannelmixer=0:0:0:0.9:1:0:0:0.9:1:0:0:0.9[colorchannelmixed];[colorchannelmixed]eq=1:0.3:1:1:1:1:1:1[color_effect]\" -map [color_effect] -c:v libx264 -c:a copy output_video1.MP4"
+                //      + " && ffmpeg -y -i " + directoryName2 + " -filter_complex \"[0:v]colorchannelmixer=1:0:0:0:0:0:0:0:0:0:0:0[colorchannelmixed];[colorchannelmixed]eq=1:1:1:1:1:1:1:1[color_effect]\" -map [color_effect] -c:v libx264 -c:a copy output_video2.MP4"
+                //         + " && ffmpeg -y -i C:\\Users\\MIDORI\\Source\\Repos\\DTWandKmeansClastering\\DTWandKmeansClastering\\bin\\Debug\\output_video1.MP4 - i C:\\Users\\MIDORI\\Source\\Repos\\DTWandKmeansClastering\\DTWandKmeansClastering\\bin\\Debug\\output_video2.MP4 - filter_complex \"blend=all_opacity=0.7\" " + laShootNum1.Text + "_" + laShootNum2.Text + ".MP4"
+                //};
+                // "/C ffmpeg
+
+                //https://nico-lab.net/edgedetect_with_ffmpeg/
+
+                string[] paras1 = { "-y -ss " + video1starttime + " -t " + video1cutLength + " -i " + directoryName1 +  " -filter_complex \"[0:v] edgedetect=10/255:50/255:wires[edge],[edge]colorchannelmixer=0:0:0:0.9:1:0:0:0.9:1:0:0:0.9[colorchannelmixed];[colorchannelmixed]eq=1:0.3:1:1:1:1:1:1[color_effect]\" -map [color_effect] -c:v libx264 -c:a copy output_video" + laShootNum1.Text +".MP4"
+                };
+
+                //add" -ignore_chapter 1" if you have output trable 
+                string[] paras2 = { "-y -ss " + video2strattime + " -t " + video2cutLength + " -i " + directoryName2 +  " -filter_complex \"[0:v] edgedetect=10/255:50/255:wires[edge],[edge]colorchannelmixer=1:0:0:0.9:0:0:0:0.9:0:0:0:0.9[colorchannelmixed];[colorchannelmixed]eq=1:0.3:1:1:1:1:1:1[color_effect]\" -map [color_effect] -c:v libx264 -c:a copy output_video"+ laShootNum2.Text +".MP4"
+                };
+
+                string[] paras3 =
+                {
+                    "-y -i C:\\Users\\MIDORI\\Source\\Repos\\DTWandKmeansClastering\\DTWandKmeansClastering\\bin\\Debug\\output_video" + laShootNum2.Text +".MP4 -i C:\\Users\\MIDORI\\Source\\Repos\\DTWandKmeansClastering\\DTWandKmeansClastering\\bin\\Debug\\output_video"+ laShootNum1.Text +".MP4 -filter_complex \"blend=all_opacity=0.7\" " + "blue"+ laShootNum1.Text + "_" +"red"+ laShootNum2.Text + ".MP4"
+                    //"-i C:\\Users\\MIDORI\\Source\\Repos\\DTWandKmeansClastering\\DTWandKmeansClastering\\bin\\Debug\\output_video" + laShootNum2.Text +".MP4 -i C:\\Users\\MIDORI\\Source\\Repos\\DTWandKmeansClastering\\DTWandKmeansClastering\\bin\\Debug\\output_video"+ laShootNum1.Text +".MP4 -filter_complex \"[0:0]split[shoot1][shoot2]; [shoot1] [1:0] overlay[overlay]; [overlay] [shoot2] blend=all_mode=difference \" -map 1:1 overlay"+ laShootNum1.Text + "_" + laShootNum2.Text  +".MP4"
+                };
+
+
+                //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.synchronizingobject?view=netframework-4.8#System_Diagnostics_Process_SynchronizingObject
+                //for (int cn = 1; cn < 2; cn++)
+                //{
+#if false
+                   System.Diagnostics.Process p = new System.Diagnostics.Process();
+                //string para = "paras" + cn;
+                    p.StartInfo.FileName = "cmd.exe";
+                    //cmd// p.StartInfo.FileName = "cmd.exe";
+;                   //cmd// p.StartInfo.FileName = "cmd.exe";
+                    //Console.WriteLine(string.Join(" ", paras1));
+                    //p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+                    //cmd//p.StartInfo.Arguments = string.Join(" ", paras1);
+                    //cmd//p.StartInfo.Arguments = string.Join(p.StartInfo.Arguments, paras2);
+                    //cmd//p.StartInfo.Arguments = string.Join(p.StartInfo.Arguments, paras3);
+                    p.StartInfo.Arguments = string.Join("  /K", paras1);
+                    p.StartInfo.UseShellExecute = false;        //don't use the operating system shell
+                    p.StartInfo.RedirectStandardOutput = true;  //put output directly in Process.StandardOutput
+                    p.StartInfo.RedirectStandardInput = true;   //put input directly in Process.StandardOutput
+                    p.StartInfo.CreateNoWindow = true;          //don't make new Window
+
+
+                    try
+                    {
+                        p.Start();
+                        //p.Exited += new EventHandler(MyProcessExited);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception.Message);
+                    }
+#else
+
+
+#endif
+                //batファイルと文字列の組み合わせで実行できなかったため、中身を文字列にして実行することに
+                System.Diagnostics.Process p = System.Diagnostics.Process.Start("cmd.exe", paras0[0]);
+                //System.Diagnostics.Process p = System.Diagnostics.Process.Start("ff.bat");
+                //p.WaitForExit();
+
+                //    p.Dispose();
                 //}
-                Console.WriteLine(string.Join(" ", paras));
-                //p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-                p.StartInfo.Arguments = string.Join(" ", paras);
-                p.StartInfo.UseShellExecute = false;        //don't use the operating system shell
-                p.StartInfo.RedirectStandardOutput = true;  //put output directly in Process.StandardOutput
-                p.StartInfo.RedirectStandardInput = true;   //put input directly in Process.StandardOutput
-                p.StartInfo.CreateNoWindow = true;          //don't make new Window
+
+                System.Diagnostics.Process p2 = new System.Diagnostics.Process();
+                p2.StartInfo.FileName = "ffmpeg";
+                p2.StartInfo.Arguments = string.Join("", paras1[0]);
+                p2.StartInfo.UseShellExecute = false;        //don't use the operating system shell
+                p2.StartInfo.RedirectStandardOutput = true;  //put output directly in Process.StandardOutput
+                p2.StartInfo.RedirectStandardInput = true;   //put input directly in Process.StandardOutput
+                p2.StartInfo.CreateNoWindow = true;          //don't make new Window
 
 
                 try
                 {
-                    p.Start();
+                    p2.Start();
+                    p2.WaitForExit();
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception.Message);
                 }
+                p2.Dispose();
 
 
-                p.WaitForExit();
+                System.Diagnostics.Process p3 = new System.Diagnostics.Process();
+                p3.StartInfo.FileName = "ffmpeg";
+                p3.StartInfo.Arguments = string.Join("", paras2[0]);
+                p3.StartInfo.UseShellExecute = false;        //don't use the operating system shell
+                p3.StartInfo.RedirectStandardOutput = true;  //put output directly in Process.StandardOutput
+                p3.StartInfo.RedirectStandardInput = true;   //put input directly in Process.StandardOutput
+                p3.StartInfo.CreateNoWindow = true;          //don't make new Window
 
-                p.Close();
+
+                try
+                {
+                    p3.Start();
+                    p3.WaitForExit();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                p3.Dispose();
+
+                System.Diagnostics.Process p4 = new System.Diagnostics.Process();
+                p4.StartInfo.FileName = "ffmpeg";
+                p4.StartInfo.Arguments = string.Join("", paras3[0]);
+                p4.StartInfo.UseShellExecute = false;        //don't use the operating system shell
+                p4.StartInfo.RedirectStandardOutput = true;  //put output directly in Process.StandardOutput
+                p4.StartInfo.RedirectStandardInput = true;   //put input directly in Process.StandardOutput
+                p4.StartInfo.CreateNoWindow = true;          //don't make new Window
+
+
+                try
+                {
+                    p4.Start();
+                    p4.WaitForExit();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                p4.Dispose();
+
+                //cmd上での動作が終るまでプロセスpは閉じない
+                //p.WaitForExit();
+                p.Dispose();
 
                 ShowOverlayVideo(int.Parse(laShootNum1.Text), int.Parse(laShootNum2.Text));
+
+                MessageBox.Show("Output video finished");
 
 
 
@@ -397,6 +507,16 @@ namespace DTWandKmeansClastering
 
 
            
+        }
+        private void MyProcessExited(Object source, EventArgs e)
+        {
+            MessageBox.Show("The process has exited.");
+        }
+
+        private void BtSavePng_Click(object sender, EventArgs e)
+        {
+            chart1.SaveImage( laShootNum1 + ".png", ChartImageFormat.Png);
+            chart2.SaveImage( laShootNum2 + ".png", ChartImageFormat.Png);
         }
     }
 }

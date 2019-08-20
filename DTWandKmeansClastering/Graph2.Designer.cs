@@ -37,6 +37,7 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.btShowVideo1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btOverlayVideo = new System.Windows.Forms.Button();
             this.btShowVideo2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.laShootNum2 = new System.Windows.Forms.Label();
@@ -57,7 +58,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btOverlayVideo = new System.Windows.Forms.Button();
+            this.btSavePng = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udClusterId1)).BeginInit();
@@ -95,6 +96,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btSavePng);
             this.panel1.Controls.Add(this.btOverlayVideo);
             this.panel1.Controls.Add(this.numericUpDown1);
             this.panel1.Controls.Add(this.btShowVideo2);
@@ -114,6 +116,17 @@
             this.tableLayoutPanel1.SetRowSpan(this.panel1, 4);
             this.panel1.Size = new System.Drawing.Size(349, 447);
             this.panel1.TabIndex = 9;
+            // 
+            // btOverlayVideo
+            // 
+            this.btOverlayVideo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btOverlayVideo.Location = new System.Drawing.Point(131, 242);
+            this.btOverlayVideo.Name = "btOverlayVideo";
+            this.btOverlayVideo.Size = new System.Drawing.Size(208, 28);
+            this.btOverlayVideo.TabIndex = 17;
+            this.btOverlayVideo.Text = "Show Overlay Video";
+            this.btOverlayVideo.UseVisualStyleBackColor = true;
+            this.btOverlayVideo.Click += new System.EventHandler(this.BtOverlayVideo_Click);
             // 
             // btShowVideo2
             // 
@@ -246,7 +259,7 @@
             this.trackBar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trackBar1.Location = new System.Drawing.Point(37, 3);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(337, 24);
+            this.trackBar1.Size = new System.Drawing.Size(336, 24);
             this.trackBar1.TabIndex = 9;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             // 
@@ -255,7 +268,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.167842F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90.83216F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.tableLayoutPanel2.Controls.Add(this.trackBar1, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 190);
@@ -310,7 +323,7 @@
             this.trackBar3.Location = new System.Drawing.Point(37, 3);
             this.trackBar3.Name = "trackBar3";
             this.trackBar3.RightToLeftLayout = true;
-            this.trackBar3.Size = new System.Drawing.Size(337, 8);
+            this.trackBar3.Size = new System.Drawing.Size(336, 8);
             this.trackBar3.TabIndex = 9;
             this.trackBar3.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             // 
@@ -319,7 +332,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.167842F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90.83216F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.tableLayoutPanel3.Controls.Add(this.trackBar3, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 493);
@@ -370,16 +383,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(887, 510);
             this.tableLayoutPanel1.TabIndex = 16;
             // 
-            // btOverlayVideo
+            // btSavePng
             // 
-            this.btOverlayVideo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btOverlayVideo.Location = new System.Drawing.Point(131, 242);
-            this.btOverlayVideo.Name = "btOverlayVideo";
-            this.btOverlayVideo.Size = new System.Drawing.Size(208, 28);
-            this.btOverlayVideo.TabIndex = 17;
-            this.btOverlayVideo.Text = "Show Overlay Video";
-            this.btOverlayVideo.UseVisualStyleBackColor = true;
-            this.btOverlayVideo.Click += new System.EventHandler(this.BtOverlayVideo_Click);
+            this.btSavePng.AllowDrop = true;
+            this.btSavePng.Location = new System.Drawing.Point(140, 410);
+            this.btSavePng.Name = "btSavePng";
+            this.btSavePng.Size = new System.Drawing.Size(199, 23);
+            this.btSavePng.TabIndex = 18;
+            this.btSavePng.Text = "Save Png";
+            this.btSavePng.UseVisualStyleBackColor = true;
+            this.btSavePng.Click += new System.EventHandler(this.BtSavePng_Click);
             // 
             // Graph2
             // 
@@ -438,5 +451,6 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button btOverlayVideo;
+        private System.Windows.Forms.Button btSavePng;
     }
 }
